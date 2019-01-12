@@ -6,28 +6,33 @@ const port = process.env.PORT || 5000;
 
 const app = express();
 
-app.use(cors());
-app.use(express.static(__dirname + '/dist/'));
-
 console.log("server started");
 
-const con = mysql.createConnection({
+const db_config = {
   host: "us-cdbr-iron-east-01.cleardb.net",
   user: "bb0380b28b7a16",
   password: "01e2429c",
   database: "heroku_f74e2220185cbc5"
-});
+}
+
+var con
+
+app.use(cors());
+
+app.get('/', (req, res) => {
+    res.send('server working')
+})
+
+function handleDisconnect() {
+    con = mysql.createConnection(db_config);
+
 
 con.connect(function(err){
   if(err){
     console.log('Error connecting to DB', err);
-    return err;
+    setTimeout(handleDisconnect, 2000);
   }
   console.log('Connection established');
-});
-
-app.get('/', (req, res) => {
-  res.send('hi');
 });
 
 app.get('/user', (req, res) => {
@@ -43,6 +48,19 @@ app.get('/user', (req, res) => {
   });
 });
 
+
+con.on('error', function(err) {
+  console.log('db error', err);
+  if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+    handleDisconnect();                         // lost due to either server restart, or a
+  } else {                                      // connnection idle timeout (the wait_timeout
+    throw err;                                  // server variable configures this)
+  }
+});
+}
+
 app.listen(port, () => {
   console.log(port);
 });
+
+handleDisconnect();
