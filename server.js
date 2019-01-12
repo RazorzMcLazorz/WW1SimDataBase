@@ -1,4 +1,4 @@
-// mysql://beab6996bfdada:194b0321@us-cdbr-iron-east-01.cleardb.net/heroku_99e17af419b7336?reconnect=true
+// mysql://bb0380b28b7a16:01e2429c@us-cdbr-iron-east-01.cleardb.net/heroku_f74e2220185cbc5?reconnect=true
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql");
@@ -13,9 +13,9 @@ console.log("server started");
 
 const con = mysql.createConnection({
   host: "us-cdbr-iron-east-01.cleardb.net",
-  user: "beab6996bfdada",
-  password: "194b0321",
-  database: "heroku_99e17af419b7336"
+  user: "bb0380b28b7a16",
+  password: "01e2429c",
+  database: "heroku_f74e2220185cbc5"
 });
 
 con.connect(function(err){
