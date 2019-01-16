@@ -77,8 +77,8 @@ app.get('/save', (req, res) => {
 
 // add data to save games
 app.get('/save/add', (req, res) => {
-  const { save_name } = req.query;
-  con.query(`INSERT INTO save(save_name) VALUES('${save_name}')`, (err, result) => {
+  const { save_name, save_count, save_username } = req.query;
+  con.query(`INSERT INTO save(save_name, save_count, save_username) VALUES('${save_name}', ${save_count}, '${save_username}');`, (err, result) => {
     if(err) {
       return res.send(err)
     }
@@ -86,6 +86,20 @@ app.get('/save/add', (req, res) => {
       return res.send('Success!')
     }
   })
+})
+
+app.get('/save/find', (req, res) => {
+  const { name, username } = req.query;
+  con.query(`SELECT * FROM save WHERE save_name = '${name}' AND save_username = '${username}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
 })
 
 con.on('error', function(err) {
