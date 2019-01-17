@@ -102,6 +102,34 @@ app.get('/save/find', (req, res) => {
   });
 })
 
+app.get('/save/games', (req, res) => {
+  const { username } = req.query;
+  con.query(`SELECT * FROM save WHERE save_username = '${username}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
+app.get('/current', (req, res) => {
+  const { user } = req.query;
+  con.query(`SELECT * FROM country_current WHERE country_username = '${user}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
 con.on('error', function(err) {
   console.log('db error', err);
   if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
