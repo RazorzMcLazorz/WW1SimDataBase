@@ -102,6 +102,31 @@ app.get('/save/find', (req, res) => {
   });
 })
 
+app.get('/players', (req, res) => {
+  con.query('SELECT * FROM player;', (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+});
+
+app.get('/players/add', (req, res) => {
+  const { user, save, country, count, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 } = req.query;
+  con.query(`INSERT INTO player(player_username, player_savename, player_country, player_count, player_1, player_2, player_3, player_4, player_5, player_6, player_7, player_8, player_9, player_10) VALUES('${user}', '${save}', '${country}', ${count}, '${p1}', '${p2}', '${p3}', '${p4}', '${p5}', '${p6}', '${p7}', '${p8}', '${p9}', '${p10}');`, (err, result) => {
+    if(err) {
+      return res.send(err)
+    }
+    else {
+      return res.send('Success!')
+    }
+  })
+})
+
 app.get('/save/games', (req, res) => {
   const { username } = req.query;
   con.query(`SELECT * FROM save WHERE save_username = '${username}';`, (err, result) => {
