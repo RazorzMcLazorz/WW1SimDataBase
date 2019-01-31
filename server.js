@@ -155,6 +155,75 @@ app.get('/current', (req, res) => {
   });
 })
 
+app.get('/current/grab', (req, res) => {
+  const { user, name } = req.query;
+  con.query(`SELECT * FROM country_current WHERE country_username = '${user}' AND country_savename = '${name}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
+app.get('/current/add', (req, res) => {
+  const { user, save, name, rank, gold, pp, round } = req.query;
+  con.query(`INSERT INTO country_current(country_username, country_savename, country_name, country_rank, country_gold, country_power_points, country_round) VALUES ('${user}', '${save}', '${name}', ${rank}, ${gold}, ${pp}, ${round});`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
+app.get('/past', (req, res) => {
+  con.query('SELECT * FROM country_past;', (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+});
+
+app.get('/past/find', (req, res) => {
+  const { user } = req.query;
+  con.query(`SELECT * FROM country_past WHERE country_username = '${user}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
+app.get('/past/add', (req, res) => {
+  const { user, save, name, rank, gold, pp, round } = req.query;
+  con.query(`INSERT INTO country_past(country_username, country_savename, country_name, country_rank, country_gold, country_power_points, country_round) VALUES ('${user}', '${save}', '${name}', ${rank}, ${gold}, ${pp}, ${round});`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
 con.on('error', function(err) {
   console.log('db error', err);
   if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
