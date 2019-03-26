@@ -224,6 +224,35 @@ app.get('/past/add', (req, res) => {
   });
 })
 
+// /current/update?user=Razorz&save=Game%20Test&country=germany&rank=2&gold=100&pp=1000&round=1
+app.get('/current/update', (req, res) => {
+  const { user, save, country, rank, gold, pp, round } = req.query;
+  con.query(`UPDATE country_current SET country_rank = ${rank}, country_gold = ${gold}, country_power_points = ${pp}, country_round = ${round} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
+app.get('/past/update', (req, res) => {
+  const { user, save, country, rank, gold, pp, round } = req.query;
+  con.query(`UPDATE country_past SET country_rank = ${rank}, country_gold = ${gold}, country_power_points = ${pp}, country_round = ${round} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
 con.on('error', function(err) {
   console.log('db error', err);
   if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
