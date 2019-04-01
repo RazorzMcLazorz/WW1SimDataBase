@@ -128,6 +128,20 @@ app.get('/players/add', (req, res) => {
 })
 
 app.get('/save/games', (req, res) => {
+  const { username } = req.query;
+  con.query(`SELECT * FROM save WHERE save_username = '${username}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
+app.get('/save/selectgame', (req, res) => {
   const { username, name } = req.query;
   con.query(`SELECT * FROM save WHERE save_username = '${username}'&& save_name = '${name}';`, (err, result) => {
     if (err) {
