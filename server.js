@@ -170,8 +170,8 @@ app.get('/current/grab', (req, res) => {
 })
 
 app.get('/current/add', (req, res) => {
-  const { user, save, name, rank, gold, pp, round } = req.query;
-  con.query(`INSERT INTO country_current(country_username, country_savename, country_name, country_rank, country_gold, country_power_points, country_round) VALUES ('${user}', '${save}', '${name}', ${rank}, ${gold}, ${pp}, ${round});`, (err, result) => {
+  const { user, save, name, rank, gold, pp} = req.query;
+  con.query(`INSERT INTO country_current(country_username, country_savename, country_name, country_rank, country_gold, country_power_points) VALUES ('${user}', '${save}', '${name}', ${rank}, ${gold}, ${pp});`, (err, result) => {
     if (err) {
       return res.send(err);
     }
@@ -211,8 +211,8 @@ app.get('/past/find', (req, res) => {
 })
 
 app.get('/past/add', (req, res) => {
-  const { user, save, name, rank, gold, pp, round } = req.query;
-  con.query(`INSERT INTO country_past(country_username, country_savename, country_name, country_rank, country_gold, country_power_points, country_round) VALUES ('${user}', '${save}', '${name}', ${rank}, ${gold}, ${pp}, ${round});`, (err, result) => {
+  const { user, save, name, rank, gold, pp} = req.query;
+  con.query(`INSERT INTO country_past(country_username, country_savename, country_name, country_rank, country_gold, country_power_points) VALUES ('${user}', '${save}', '${name}', ${rank}, ${gold}, ${pp});`, (err, result) => {
     if (err) {
       return res.send(err);
     }
@@ -224,10 +224,10 @@ app.get('/past/add', (req, res) => {
   });
 })
 
-// /current/update?user=Razorz&save=Game%20Test&country=germany&rank=2&gold=100&pp=1000&round=1
+// /current/update?user=Razorz&save=Game%20Test&country=germany&rank=2&gold=100&pp=1000
 app.get('/current/update', (req, res) => {
-  const { user, save, country, rank, gold, pp, round } = req.query;
-  con.query(`UPDATE country_current SET country_rank = ${rank}, country_gold = ${gold}, country_power_points = ${pp}, country_round = ${round} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
+  const { user, save, country, rank, gold, pp} = req.query;
+  con.query(`UPDATE country_current SET country_rank = ${rank}, country_gold = ${gold}, country_power_points = ${pp} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
     if (err) {
       return res.send(err);
     }
@@ -240,8 +240,8 @@ app.get('/current/update', (req, res) => {
 })
 
 app.get('/past/update', (req, res) => {
-  const { user, save, country, rank, gold, pp, round } = req.query;
-  con.query(`UPDATE country_past SET country_rank = ${rank}, country_gold = ${gold}, country_power_points = ${pp}, country_round = ${round} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
+  const { user, save, country, rank, gold, pp} = req.query;
+  con.query(`UPDATE country_past SET country_rank = ${rank}, country_gold = ${gold}, country_power_points = ${pp} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
     if (err) {
       return res.send(err);
     }
