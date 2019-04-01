@@ -77,8 +77,8 @@ app.get('/save', (req, res) => {
 
 // add data to save games
 app.get('/save/add', (req, res) => {
-  const { save_name, save_count, save_username } = req.query;
-  con.query(`INSERT INTO save(save_name, save_count, save_username) VALUES('${save_name}', ${save_count}, '${save_username}');`, (err, result) => {
+  const { save_name, save_count, save_username, round } = req.query;
+  con.query(`INSERT INTO save(save_name, save_count, save_username, save_round) VALUES('${save_name}', ${save_count}, '${save_username}', '${round}');`, (err, result) => {
     if(err) {
       return res.send(err)
     }
