@@ -75,6 +75,21 @@ app.get('/save', (req, res) => {
   });
 });
 
+// /save/delete?user=Razorz&save=Game
+app.get('/save/delete', (req, res) => {
+  const { user, save } = req.query;
+  con.query(`DELETE FROM save WHERE save_username = '${user}' AND save_name = '${save}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
 // add data to save games
 app.get('/save/add', (req, res) => {
   const { save_name, save_count, save_username, round } = req.query;
@@ -143,7 +158,7 @@ app.get('/save/games', (req, res) => {
 
 app.get('/save/selectgame', (req, res) => {
   const { username, name } = req.query;
-  con.query(`SELECT * FROM save WHERE save_username = '${username}'&& save_name = '${name}';`, (err, result) => {
+  con.query(`SELECT * FROM save WHERE save_username='${username}' && save_name='${name}';`, (err, result) => {
     if (err) {
       return res.send(err);
     }
