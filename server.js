@@ -78,6 +78,8 @@ app.get('/save', (req, res) => {
 // /save/delete?user=Razorz&save=Game
 app.get('/save/delete', (req, res) => {
   const { user, save } = req.query;
+  con.query(`DELETE FROM country_current WHERE country_username = '${user}' AND country_savename = '${save}';`)
+  con.query(`DELETE FROM country_past WHERE country_username = '${user}' AND country_savename = '${save}';`)
   con.query(`DELETE FROM save WHERE save_username = '${user}' AND save_name = '${save}';`, (err, result) => {
     if (err) {
       return res.send(err);
