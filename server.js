@@ -62,6 +62,21 @@ app.get('/user/single', (req, res) => {
   });
 });
 
+// /round/update?user=Razorz&save=test&round=2
+app.get('/round/update', (req, res) => {
+  const { user, save, round } = req.query;
+  con.query(`UPDATE save SET save_round = ${round} WHERE save_name = '${save}' AND save_username = '${user}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+});
+
 app.get('/save', (req, res) => {
   con.query('SELECT * FROM save;', (err, result) => {
     if (err) {
@@ -236,7 +251,7 @@ app.get('/past/find', (req, res) => {
     }
     else {
       return res.json({
-        data : result
+        data : (result + 'true')
       })
     }
   });
@@ -250,7 +265,7 @@ app.get('/past/add', (req, res) => {
     }
     else {
       return res.json({
-        data : result
+        data : (result + 'true')
       })
     }
   });
@@ -258,8 +273,8 @@ app.get('/past/add', (req, res) => {
 
 // /current/update?user=Razorz&save=Game%20Test&country=germany&rank=2&gold=100&pp=1000
 app.get('/current/update', (req, res) => {
-  const { user, save, country, rank, gold, pp} = req.query;
-  con.query(`UPDATE country_current SET country_rank = ${rank}, country_gold = ${gold}, country_power_points = ${pp} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
+  const { user, save, country, gold, pp} = req.query;
+  con.query(`UPDATE country_current SET country_gold = ${gold}, country_power_points = ${pp} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
     if (err) {
       return res.send(err);
     }
@@ -272,8 +287,8 @@ app.get('/current/update', (req, res) => {
 })
 
 app.get('/past/update', (req, res) => {
-  const { user, save, country, rank, gold, pp} = req.query;
-  con.query(`UPDATE country_past SET country_rank = ${rank}, country_gold = ${gold}, country_power_points = ${pp} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
+  const { user, save, country, gold, pp} = req.query;
+  con.query(`UPDATE country_past SET country_gold = ${gold}, country_power_points = ${pp} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
     if (err) {
       return res.send(err);
     }
