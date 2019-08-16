@@ -273,8 +273,8 @@ app.get('/past/add', (req, res) => {
 
 // http://localhost:5000/current/update?user=Razorz&save=test&country=Germany&gold=21&rank=3
 app.get('/current/update', (req, res) => {
-  const { user, save, country, gold, rank} = req.query;
-  con.query(`UPDATE country_current SET country_gold = ${gold}, country_rank = ${rank} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
+  const { user, save, country, gold, rank, pp} = req.query;
+  con.query(`UPDATE country_current SET country_gold = ${gold}, country_rank = ${rank}, country_power_points = ${pp} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
     if (err) {
       return res.send(err);
     }
@@ -288,8 +288,8 @@ app.get('/current/update', (req, res) => {
 
 // http://localhost:5000/past/update?user=Razorz&save=test&country=Germany&gold=21&rank=3
 app.get('/past/update', (req, res) => {
-  const { user, save, country, gold, rank} = req.query;
-  con.query(`UPDATE country_past SET country_gold = ${gold}, country_rank = ${rank} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
+  const { user, save, country, gold, rank, pp} = req.query;
+  con.query(`UPDATE country_past SET country_gold = ${gold}, country_rank = ${rank}, country_power_points = ${pp} WHERE country_username = '${user}' AND country_savename = '${save}' AND country_name = '${country}';`, (err, result) => {
     if (err) {
       return res.send(err);
     }
