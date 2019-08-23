@@ -243,6 +243,20 @@ app.get('/past', (req, res) => {
   });
 });
 
+app.get('/past/grab', (req, res) => {
+  const { user, name } = req.query;
+  con.query(`SELECT * FROM country_past WHERE country_username = '${user}' AND country_savename = '${name}';`, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    else {
+      return res.json({
+        data : result
+      })
+    }
+  });
+})
+
 app.get('/past/find', (req, res) => {
   const { user } = req.query;
   con.query(`SELECT * FROM country_past WHERE country_username = '${user}';`, (err, result) => {
